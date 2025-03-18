@@ -6,9 +6,13 @@ screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 running = True
 dt = 0
+#GAME NAME
+pygame.display.set_caption('Are we out of the woods yet?')
 
+#Starting position
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height()-40)
 
+#Game Loop
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -21,6 +25,7 @@ while running:
 
     pygame.draw.circle(screen, "black", player_pos, 40)
 
+#Player Movement
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         player_pos.y -= 300 * dt
