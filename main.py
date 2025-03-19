@@ -10,8 +10,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 #Background
 BG = pygame.transform.scale(pygame.image.load('Background.jpeg'),(SCREEN_WIDTH,SCREEN_HEIGHT))
-def draw():
+def draw(player):
     screen.blit(BG,(0,0))
+    pygame.draw.rect(screen,'red',player)
     pygame.display.update()
 #Clock variable
 clock = pygame.time.Clock()
@@ -27,8 +28,13 @@ pygame.display.set_caption('Are we out of the woods yet?')
 test_surface = pygame.Surface((100,200))
 test_surface.fill('black')
 #PLAYER
- #Starting position
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height()-40)
+PLAYER_WIDTH = 40
+PLAYER_HEIGHT = 40
+#Starting position
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height()-PLAYER_HEIGHT)
+
+
+player = pygame.Rect(player_pos,(PLAYER_WIDTH,PLAYER_HEIGHT))
 
 #Game Loop
 while running:
@@ -38,10 +44,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     #Draw the background
-    draw()
+    draw(player)
 
 
-    pygame.draw.circle(screen, "black", player_pos, 40)
+#Player
+    player = pygame.Rect(player_pos,(PLAYER_WIDTH,PLAYER_HEIGHT))
 
 #Player Movement
     keys = pygame.key.get_pressed()
