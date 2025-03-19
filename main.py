@@ -52,13 +52,13 @@ while running:
 
 #Player Movement
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_w]and player.y >= 0:
         player_pos.y -= 300 * dt
-    if keys[pygame.K_s]:
+    if keys[pygame.K_s]and player.y <= SCREEN_HEIGHT-PLAYER_HEIGHT:
         player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
+    if keys[pygame.K_a]and player.x >= 0:
         player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
+    if keys[pygame.K_d]and player.x <= SCREEN_WIDTH - PLAYER_WIDTH:
         player_pos.x += 300 * dt
     if keys[pygame.K_i]:
         pass
