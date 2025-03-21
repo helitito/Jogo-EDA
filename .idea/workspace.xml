@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Adicionado objeto Gato com função para desenhar em um local aleatorio da tela">
+    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Limites laterais adicionados para o objeto Gato não aparecer fora da tela">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,11 +74,20 @@
       <option name="project" value="LOCAL" />
       <updated>1742526763828</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Limites laterais adicionados para o objeto Gato não aparecer fora da tela">
+      <option name="closed" value="true" />
+      <created>1742526994888</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1742526994888</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adicionado objeto Gato com função para desenhar em um local aleatorio da tela" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionado objeto Gato com função para desenhar em um local aleatorio da tela" />
+    <MESSAGE value="Limites laterais adicionados para o objeto Gato não aparecer fora da tela" />
+    <option name="LAST_COMMIT_MESSAGE" value="Limites laterais adicionados para o objeto Gato não aparecer fora da tela" />
   </component>
 </project>

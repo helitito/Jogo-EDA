@@ -27,10 +27,19 @@ dt = 0
 pygame.display.set_caption('Are we out of the woods yet?')
 
 #Cats
+CAT_NAMES_M = ['fred','tom','mingau','james','nico']
+CAT_NAMES_F = ['nina','ginger','pom pom','julie', 'marie']
 CAT_HEIGHT = 30
 CAT_WIDTH = 30
 cat_posx = random.randint(30,SCREEN_WIDTH-30)
 cat_posy = random.randint(30,SCREEN_HEIGHT-30)
+cat_sex = random.random()
+def chooseCatName(cat_sex):
+    if cat_sex == 0:
+        cat_name = random.choice(CAT_NAMES_F)
+    else:
+        cat_name = random.choice(CAT_NAMES_M)
+
 cat = pygame.Rect((cat_posx,cat_posy),(CAT_WIDTH,CAT_HEIGHT))
 def drawcat(cat):
     pygame.draw.rect(screen,'blue',cat)
