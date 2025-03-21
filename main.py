@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 # pygame setup
@@ -24,16 +26,21 @@ dt = 0
 #GAME NAME
 pygame.display.set_caption('Are we out of the woods yet?')
 
+#Cats
+CAT_HEIGHT = 30
+CAT_WIDTH = 30
+cat_posx = random.randint(30,SCREEN_HEIGHT)
+cat_posy = random.randint(30,SCREEN_WIDTH)
+cat = pygame.Rect((cat_posx,cat_posy),(CAT_WIDTH,CAT_HEIGHT))
+def drawcat(cat):
+    pygame.draw.rect(screen,'blue',cat)
+
 #Surface
-test_surface = pygame.Surface((100,200))
-test_surface.fill('black')
 #PLAYER
 PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 40
 #Starting position
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height()-PLAYER_HEIGHT)
-
-
 player = pygame.Rect(player_pos,(PLAYER_WIDTH,PLAYER_HEIGHT))
 
 #Game Loop
@@ -45,6 +52,7 @@ while running:
             running = False
     #Draw the background
     draw(player)
+    drawcat(cat)
 
 
 #Player
