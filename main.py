@@ -29,8 +29,8 @@ pygame.display.set_caption('Are we out of the woods yet?')
 #Cats
 CAT_HEIGHT = 30
 CAT_WIDTH = 30
-cat_posx = random.randint(30,SCREEN_HEIGHT)
-cat_posy = random.randint(30,SCREEN_WIDTH)
+cat_posx = random.randint(30,SCREEN_WIDTH-30)
+cat_posy = random.randint(30,SCREEN_HEIGHT-30)
 cat = pygame.Rect((cat_posx,cat_posy),(CAT_WIDTH,CAT_HEIGHT))
 def drawcat(cat):
     pygame.draw.rect(screen,'blue',cat)
