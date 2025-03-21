@@ -15,11 +15,12 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 FONT = pygame.font.SysFont("comicsans",30)
 #Background
 BG = pygame.transform.scale(pygame.image.load('Background.jpeg'),(SCREEN_WIDTH,SCREEN_HEIGHT))
-def draw(player,elapsed_time):
+def draw(player,elapsed_time,cat):
     screen.blit(BG,(0,0))
     time_text = FONT.render(f"Time: {round(elapsed_time)}s,",1,"white")
     screen.blit(time_text,(10,10))
     pygame.draw.rect(screen,'red',player)
+    pygame.draw.rect(screen, 'blue', cat)
     pygame.display.update()
 #Clock variable
 clock = pygame.time.Clock()
@@ -59,8 +60,7 @@ def chooseCatName(cat_sex):
     return cat_name
 
 cat = pygame.Rect((cat_posx,cat_posy),(CAT_WIDTH,CAT_HEIGHT))
-def drawcat(cat):
-    pygame.draw.rect(screen,'blue',cat)
+
 
 #Surface
 #PLAYER
@@ -78,8 +78,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     #Draw the background
-    draw(player,elapsed_time)
-    drawcat(cat)
+    draw(player,elapsed_time,cat)
 
 
 #Player
