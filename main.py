@@ -44,7 +44,7 @@ pygame.display.set_icon(icon_surf)
 #CAT_IMG = random.choice(CAT_PICS)
  #Image displayed for the object CAT
 CAT_NAMES_M = ['fred','tom','mingau','james','nico']
-CAT_NAMES_F = ['nina','ginger','pom pom','julie', 'marie']
+CAT_NAMES_F = ['nina','ginger','pom pom','julie', 'marie','venus']
 CAT_HEIGHT = 30
 CAT_WIDTH = 30
 cat_posx = random.randint(30,SCREEN_WIDTH-30)

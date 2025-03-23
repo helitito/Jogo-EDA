@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Adicionada uma função para escolher os nomes dos gatos aleatoriamente">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Removida a função Drawcat, agora o objeto é desenhado junto ao jogador" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,13 +88,31 @@
       <option name="project" value="LOCAL" />
       <updated>1742527946949</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Adicionado icone ao jogo, funções para o objeto Gato e tempo decorrido na Tela">
+      <option name="closed" value="true" />
+      <created>1742593357240</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1742593357240</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Removida a função Drawcat, agora o objeto é desenhado junto ao jogador">
+      <option name="closed" value="true" />
+      <created>1742593590121</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742593590121</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adicionado objeto Gato com função para desenhar em um local aleatorio da tela" />
     <MESSAGE value="Limites laterais adicionados para o objeto Gato não aparecer fora da tela" />
     <MESSAGE value="Adicionada uma função para escolher os nomes dos gatos aleatoriamente" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionada uma função para escolher os nomes dos gatos aleatoriamente" />
+    <MESSAGE value="Adicionado icone ao jogo, funções para o objeto Gato e tempo decorrido na Tela" />
+    <MESSAGE value="Removida a função Drawcat, agora o objeto é desenhado junto ao jogador" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removida a função Drawcat, agora o objeto é desenhado junto ao jogador" />
   </component>
 </project>
