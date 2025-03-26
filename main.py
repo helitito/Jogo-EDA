@@ -6,50 +6,61 @@ import pygame
 pygame.init()
 pygame.font.init()
 
-#Screen size
+# Screen size
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-#FONT
-FONT = pygame.font.SysFont("comicsans",30)
-#Background
-BG = pygame.transform.scale(pygame.image.load('Background.jpeg'),(SCREEN_WIDTH,SCREEN_HEIGHT))
-def draw(player,elapsed_time,cat):
-    screen.blit(BG,(0,0))
-    time_text = FONT.render(f"Time: {round(elapsed_time)}s,",1,"white")
-    screen.blit(time_text,(10,10))
-    pygame.draw.rect(screen,'red',player)
+# FONT
+FONT = pygame.font.SysFont("comicsans", 30)
+# Background
+BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
+
+def draw(player, elapsed_time, cat, inventory, inventory_open):
+    screen.blit(BG, (0, 0))
+    time_text = FONT.render(f"Time: {round(elapsed_time)}s,", 1, "white")
+    screen.blit(time_text, (10, 10))
+    pygame.draw.rect(screen, 'red', player)
     pygame.draw.rect(screen, 'blue', cat)
+
+    # Desenhar inventory if open
+    if inventory_open:
+        for i, item in enumerate(inventory):
+            pygame.draw.rect(screen, 'green', (SCREEN_WIDTH // 2 - 200 + i * 60, SCREEN_HEIGHT - 80, 50, 40))
+            item_text = FONT.render(item, 1, "white")
+            screen.blit(item_text, (SCREEN_WIDTH // 2 - 195 + i * 60, SCREEN_HEIGHT - 70))
+
     pygame.display.update()
-#Clock variable
+
+# Clock variable
 clock = pygame.time.Clock()
 start_time = time.time()
 elapsed_time = 0
-#Game running
+
+# Game running
 running = True
 dt = 0
 
-#GAME NAME
+# Game name
 pygame.display.set_caption('Are we out of the woods yet?')
-#Game Icon
-icon_surf = pygame.transform.scale(pygame.image.load('Icon.jpg'),(50,50))
+# Game icon
+icon_surf = pygame.transform.scale(pygame.image.load('Icon.jpg'), (50, 50))
 pygame.display.set_icon(icon_surf)
 
-#Cats
+# Cats
 
 #CAT_PICS = []
- #Dictionary with the names of the Images
+#Dictionary with the names of the images
 
 #CAT_IMG = random.choice(CAT_PICS)
- #Image displayed for the object CAT
-CAT_NAMES_M = ['fred','tom','mingau','james','nico']
-CAT_NAMES_F = ['nina','ginger','pom pom','julie', 'marie','venus']
+#image displayed for the object CAT
+CAT_NAMES_M = ['fred', 'tom', 'mingau', 'james', 'nico']
+CAT_NAMES_F = ['nina', 'ginger', 'pom pom', 'julie', 'marie', 'venus']
 CAT_HEIGHT = 30
 CAT_WIDTH = 30
-cat_posx = random.randint(30,SCREEN_WIDTH-30)
-cat_posy = random.randint(30,SCREEN_HEIGHT-30)
-cat_sex = random.randint(0,1)
+cat_posx = random.randint(30, SCREEN_WIDTH - 30)
+cat_posy = random.randint(30, SCREEN_HEIGHT - 30)
+cat_sex = random.randint(0, 1)
 
 def chooseCatName(cat_sex):
     if cat_sex == 0:
@@ -59,18 +70,21 @@ def chooseCatName(cat_sex):
 
     return cat_name
 
-cat = pygame.Rect((cat_posx,cat_posy),(CAT_WIDTH,CAT_HEIGHT))
-
+cat = pygame.Rect((cat_posx, cat_posy), (CAT_WIDTH, CAT_HEIGHT))
 
 #Surface
-#PLAYER
+# Player
 PLAYER_WIDTH = 50
 PLAYER_HEIGHT = 50
-#Starting position
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height()-PLAYER_HEIGHT)
-player = pygame.Rect(player_pos,(PLAYER_WIDTH,PLAYER_HEIGHT))
+# Starting position
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() - PLAYER_HEIGHT)
+player = pygame.Rect(player_pos.x, player_pos.y, PLAYER_WIDTH, PLAYER_HEIGHT)
 
-#Game Loop
+# Inventory variables
+inventory = []  # Holds items in the inventory
+inventory_open = False  # Tracks if the inventory is open
+
+# Game Loop
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -78,34 +92,39 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     #Draw the background
-    draw(player,elapsed_time,cat)
+            
 
-
-#Player
-    player = pygame.Rect(player_pos,(PLAYER_WIDTH,PLAYER_HEIGHT))
-
-#Player Movement
+    # Player Movement
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]and player.y >= 0:
-        player_pos.y -= 300 * dt
-    if keys[pygame.K_s]and player.y <= SCREEN_HEIGHT-PLAYER_HEIGHT:
-        player_pos.y += 300 * dt
-    if keys[pygame.K_a]and player.x >= 0:
-        player_pos.x -= 300 * dt
-    if keys[pygame.K_d]and player.x <= SCREEN_WIDTH - PLAYER_WIDTH:
-        player_pos.x += 300 * dt
+
+    # Allow movement only if inventory is closed
+    if not inventory_open:
+        if keys[pygame.K_w] and player.top > 0:
+            player.y -= 300 * dt
+        if keys[pygame.K_s] and player.bottom < SCREEN_HEIGHT:
+            player.y += 300 * dt
+        if keys[pygame.K_a] and player.left > 0:
+            player.x -= 300 * dt
+        if keys[pygame.K_d] and player.right < SCREEN_WIDTH:
+            player.x += 300 * dt
+
+    # Open/Close inventory with 'I'
     if keys[pygame.K_i]:
-        pass
+        inventory_open = not inventory_open
 
+    # Add random item to inventory (for testing, just add an item each frame)
+    if len(inventory) < 7 and random.random() < 0.05:  # 5% chance to add item
+        inventory.append(f"Item{len(inventory) + 1}")
+        inventory.sort()  # Sort inventory alphabetically
 
-# flip() the display to put your work on screen
+    # Draw everything
+    draw(player, elapsed_time, cat, inventory, inventory_open)
+
+    # Flip display
     pygame.display.flip()
 
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate
-    # independent physics.
+    # Limit FPS to 60
     dt = clock.tick(60) / 1000
     elapsed_time = time.time() - start_time
 
 pygame.quit()
-
