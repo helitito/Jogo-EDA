@@ -13,12 +13,13 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # FONT
 FONT = pygame.font.SysFont("comicsans", 30)
+item_font = pygame.font.SysFont('comicsans',5)
 # Background
 BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 def draw(player, elapsed_time, cat, inventory, inventory_open):
     screen.blit(BG, (0, 0))
-    time_text = FONT.render(f"Time: {round(elapsed_time)}s,", 1, "white")
+    time_text = item_font.render(f"Time: {round(elapsed_time)}s,", 1, "white")
     screen.blit(time_text, (10, 10))
     pygame.draw.rect(screen, 'red', player)
     pygame.draw.rect(screen, 'blue', cat)
@@ -27,7 +28,7 @@ def draw(player, elapsed_time, cat, inventory, inventory_open):
     if inventory_open:
         for i, item in enumerate(inventory):
             pygame.draw.rect(screen, 'green', (SCREEN_WIDTH // 2 - 200 + i * 60, SCREEN_HEIGHT - 80, 50, 40))
-            item_text = FONT.render(item, 1, "white")
+            item_text = FONT.render(item, 1, "white",)
             screen.blit(item_text, (SCREEN_WIDTH // 2 - 195 + i * 60, SCREEN_HEIGHT - 70))
 
     pygame.display.update()
@@ -110,7 +111,12 @@ while running:
 
     # Open/Close inventory with 'I'
     if keys[pygame.K_i]:
-        inventory_open = not inventory_open
+        if inventory_open == False:
+            inventory_open = True
+        elif inventory_open == True:
+            inventory_open = False
+        else :
+            pass
 
     # Add random item to inventory (for testing, just add an item each frame)
     if len(inventory) < 7 and random.random() < 0.05:  # 5% chance to add item
