@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Diminuida a velocidade do jogador">
+    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="inventário movido para o canto esquerdo">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -130,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743096297112</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="inventário movido para o canto esquerdo">
+      <option name="closed" value="true" />
+      <created>1743096525516</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743096525516</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -153,6 +162,7 @@
     <MESSAGE value="Corrigidos erros de escrita" />
     <MESSAGE value="Adicionado a fonte dos textos dos itens e modificado como o inventário abre e fecha" />
     <MESSAGE value="Diminuida a velocidade do jogador" />
-    <option name="LAST_COMMIT_MESSAGE" value="Diminuida a velocidade do jogador" />
+    <MESSAGE value="inventário movido para o canto esquerdo" />
+    <option name="LAST_COMMIT_MESSAGE" value="inventário movido para o canto esquerdo" />
   </component>
 </project>

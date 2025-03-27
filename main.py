@@ -13,10 +13,11 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # FONT
 FONT = pygame.font.SysFont("comicsans", 30)
-item_font = pygame.font.SysFont('comicsans',5)
+item_font = pygame.font.SysFont('comicsans',15)
 # Background
 BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
-
+#Inventory Background
+inventory_background = pygame.Rect((50,SCREEN_HEIGHT-90 ), (490,60))
 def draw(player, elapsed_time, cat, inventory, inventory_open):
     screen.blit(BG, (0, 0))
     time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "white")
@@ -25,10 +26,11 @@ def draw(player, elapsed_time, cat, inventory, inventory_open):
     pygame.draw.rect(screen, 'blue', cat)
 
     # Desenhar inventory if open
-    if inventory_open:
+    if inventory_open == True:
+        pygame.draw.rect(screen, 'Black', inventory_background)
         for i, item in enumerate(inventory):
             pygame.draw.rect(screen, 'green', (60 + i * 60, SCREEN_HEIGHT - 80, 50, 40))
-            item_text = FONT.render(item, 1, "white",)
+            item_text = item_font.render(item, 1, "white",)
             screen.blit(item_text, (60 + i * 60, SCREEN_HEIGHT - 70))
 
     pygame.display.update()
@@ -82,7 +84,7 @@ player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() - PLAYER
 player = pygame.Rect(player_pos.x, player_pos.y, PLAYER_WIDTH, PLAYER_HEIGHT)
 
 # Inventory variables
-inventory = ['gato1','gato2','gato3','gato4','gato6','gato7','gato8']  # Holds items in the inventory
+inventory = ['gato1','gato2','gato3','gato4','gato5','gato6','gato7','gato8']  # Holds items in the inventory
 inventory_open = False  # Tracks if the inventory is open
 
 # Game Loop
@@ -97,6 +99,7 @@ while running:
 
     # Player Movement
     keys = pygame.key.get_pressed()
+    inv = pygame.key.get_just_pressed()
 
     # Allow movement only if inventory is closed
     if not inventory_open:
@@ -110,13 +113,12 @@ while running:
             player.x += 200 * dt
 
     # Open/Close inventory with 'I'
-    if keys[pygame.K_i]:
-        if inventory_open == False:
+    if inv[pygame.K_i]:
+        if pygame.KEYUP:
+         if inventory_open == False:
             inventory_open = True
-        elif inventory_open == True:
+         else:
             inventory_open = False
-        else :
-            pass
 
     # Add random item to inventory (for testing, just add an item each frame)
     if len(inventory) < 8 and random.random() < 0.05:  # 5% chance to add item
