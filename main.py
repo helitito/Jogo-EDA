@@ -19,7 +19,7 @@ BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH,
 
 def draw(player, elapsed_time, cat, inventory, inventory_open):
     screen.blit(BG, (0, 0))
-    time_text = item_font.render(f"Time: {round(elapsed_time)}s,", 1, "white")
+    time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "white")
     screen.blit(time_text, (10, 10))
     pygame.draw.rect(screen, 'red', player)
     pygame.draw.rect(screen, 'blue', cat)
@@ -82,7 +82,7 @@ player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() - PLAYER
 player = pygame.Rect(player_pos.x, player_pos.y, PLAYER_WIDTH, PLAYER_HEIGHT)
 
 # Inventory variables
-inventory = []  # Holds items in the inventory
+inventory = ['gato1','gato2','gato3','gato4','gato6','gato7','gato8']  # Holds items in the inventory
 inventory_open = False  # Tracks if the inventory is open
 
 # Game Loop
@@ -101,13 +101,13 @@ while running:
     # Allow movement only if inventory is closed
     if not inventory_open:
         if keys[pygame.K_w] and player.top > 0:
-            player.y -= 300 * dt
+            player.y -= 200 * dt
         if keys[pygame.K_s] and player.bottom < SCREEN_HEIGHT:
-            player.y += 300 * dt
+            player.y += 200 * dt
         if keys[pygame.K_a] and player.left > 0:
-            player.x -= 300 * dt
+            player.x -= 200 * dt
         if keys[pygame.K_d] and player.right < SCREEN_WIDTH:
-            player.x += 300 * dt
+            player.x += 200 * dt
 
     # Open/Close inventory with 'I'
     if keys[pygame.K_i]:
@@ -119,7 +119,7 @@ while running:
             pass
 
     # Add random item to inventory (for testing, just add an item each frame)
-    if len(inventory) < 7 and random.random() < 0.05:  # 5% chance to add item
+    if len(inventory) < 8 and random.random() < 0.05:  # 5% chance to add item
         inventory.append(f"Item{len(inventory) + 1}")
         inventory.sort()  # Sort inventory alphabetically
 

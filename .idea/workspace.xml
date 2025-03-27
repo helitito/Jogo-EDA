@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Corrigidos erros de escrita">
+    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Adicionado a fonte dos textos dos itens e modificado como o inventário abre e fecha">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -115,7 +115,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742764243058</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Adicionado a fonte dos textos dos itens e modificado como o inventário abre e fecha">
+      <option name="closed" value="true" />
+      <created>1743024558581</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743024558581</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -136,6 +144,7 @@
     <MESSAGE value="Adicionado icone ao jogo, funções para o objeto Gato e tempo decorrido na Tela" />
     <MESSAGE value="Removida a função Drawcat, agora o objeto é desenhado junto ao jogador" />
     <MESSAGE value="Corrigidos erros de escrita" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrigidos erros de escrita" />
+    <MESSAGE value="Adicionado a fonte dos textos dos itens e modificado como o inventário abre e fecha" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionado a fonte dos textos dos itens e modificado como o inventário abre e fecha" />
   </component>
 </project>
