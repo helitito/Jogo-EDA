@@ -27,9 +27,9 @@ def draw(player, elapsed_time, cat, inventory, inventory_open):
     # Desenhar inventory if open
     if inventory_open:
         for i, item in enumerate(inventory):
-            pygame.draw.rect(screen, 'green', (SCREEN_WIDTH // 2 - 200 + i * 60, SCREEN_HEIGHT - 80, 50, 40))
+            pygame.draw.rect(screen, 'green', (60 + i * 60, SCREEN_HEIGHT - 80, 50, 40))
             item_text = FONT.render(item, 1, "white",)
-            screen.blit(item_text, (SCREEN_WIDTH // 2 - 195 + i * 60, SCREEN_HEIGHT - 70))
+            screen.blit(item_text, (60 + i * 60, SCREEN_HEIGHT - 70))
 
     pygame.display.update()
 
