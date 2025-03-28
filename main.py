@@ -17,7 +17,7 @@ item_font = pygame.font.SysFont('comicsans',15)
 # Background
 BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
 #Inventory Background
-inventory_background = pygame.Rect((50,SCREEN_HEIGHT-90 ), (490,60))
+inventory_background = pygame.Rect((50,SCREEN_HEIGHT-90 ), (490,80))
 def draw(player, elapsed_time, cat, inventory, inventory_open):
     screen.blit(BG, (0, 0))
     time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "white")
@@ -31,7 +31,7 @@ def draw(player, elapsed_time, cat, inventory, inventory_open):
         for i, item in enumerate(inventory):
             pygame.draw.rect(screen, 'green', (60 + i * 60, SCREEN_HEIGHT - 80, 50, 40))
             item_text = item_font.render(item, 1, "white",)
-            screen.blit(item_text, (60 + i * 60, SCREEN_HEIGHT - 70))
+            screen.blit(item_text, (60 + i * 60, SCREEN_HEIGHT - 40))
 
     pygame.display.update()
 
