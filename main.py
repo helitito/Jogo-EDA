@@ -52,15 +52,16 @@ pygame.display.set_icon(icon_surf)
 
 # Cats
 
-#CAT_PICS = []
+CAT_PICS = ['Cats/White','Cats/Beige','Cats/Black','Cats/Orange','Cats/Grey']
 #Dictionary with the names of the images
-
-#CAT_IMG = random.choice(CAT_PICS)
-#image displayed for the object CAT
-CAT_NAMES_M = ['fred', 'tom', 'mingau', 'james', 'nico']
-CAT_NAMES_F = ['nina', 'ginger', 'pom pom', 'julie', 'marie', 'venus']
 CAT_HEIGHT = 30
 CAT_WIDTH = 30
+CAT_IMG = random.choice(CAT_PICS)
+cat_surf = pygame.transform.scale(CAT_IMG,CAT_HEIGHT,CAT_WIDTH)
+
+CAT_NAMES_M = ['fred', 'tom', 'mingau', 'james', 'nico']
+CAT_NAMES_F = ['nina', 'ginger', 'pom pom', 'julie', 'marie', 'venus']
+
 cat_posx = random.randint(30, SCREEN_WIDTH - 30)
 cat_posy = random.randint(30, SCREEN_HEIGHT - 30)
 cat_sex = random.randint(0, 1)
@@ -73,7 +74,7 @@ def chooseCatName(cat_sex):
 
     return cat_name
 
-cat = pygame.Rect((cat_posx, cat_posy), (CAT_WIDTH, CAT_HEIGHT))
+cat = pygame.Rect((cat_posx, cat_posy), cat_surf)
 
 #Surface
 # Player
