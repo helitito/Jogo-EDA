@@ -18,13 +18,12 @@ item_font = pygame.font.SysFont('comicsans',15)
 BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
 #Inventory Background
 inventory_background = pygame.Rect((50,SCREEN_HEIGHT-90 ), (490,80))
-def draw(player, elapsed_time, cat, inventory, inventory_open):
+def draw(player, elapsed_time, cat, inventory, inventory_open, cat_surf):
     screen.blit(BG, (0, 0))
     time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "white")
     screen.blit(time_text, (10, 10))
     pygame.draw.rect(screen, 'red', player)
-    pygame.draw.rect(screen, 'blue', cat)
-
+    screen.blit(cat_surf,(cat.x,cat.y))
     # Desenhar inventory if open
     if inventory_open == True:
         pygame.draw.rect(screen, 'Black', inventory_background)
@@ -52,18 +51,18 @@ pygame.display.set_icon(icon_surf)
 
 # Cats
 
-CAT_PICS = ['Cats/White','Cats/Beige','Cats/Black','Cats/Orange','Cats/Grey']
+CAT_PICS = ['Cats/White.png','Cats/Beige.png','Cats/Black.png','Cats/Orange.png','Cats/Grey.png']
 #Dictionary with the names of the images
-CAT_HEIGHT = 30
-CAT_WIDTH = 30
+CAT_HEIGHT = 40
+CAT_WIDTH = 40
 CAT_IMG = random.choice(CAT_PICS)
-cat_surf = pygame.transform.scale(CAT_IMG,CAT_HEIGHT,CAT_WIDTH)
+cat_surf = pygame.transform.scale(pygame.image.load(CAT_IMG),(CAT_HEIGHT, CAT_WIDTH))
 
 CAT_NAMES_M = ['fred', 'tom', 'mingau', 'james', 'nico']
 CAT_NAMES_F = ['nina', 'ginger', 'pom pom', 'julie', 'marie', 'venus']
 
-cat_posx = random.randint(30, SCREEN_WIDTH - 30)
-cat_posy = random.randint(30, SCREEN_HEIGHT - 30)
+cat_posx = float(random.randint(30, SCREEN_WIDTH - 30))
+cat_posy = float(random.randint(30, SCREEN_HEIGHT - 30))
 cat_sex = random.randint(0, 1)
 
 def chooseCatName(cat_sex):
@@ -74,7 +73,7 @@ def chooseCatName(cat_sex):
 
     return cat_name
 
-cat = pygame.Rect((cat_posx, cat_posy), cat_surf)
+cat = pygame.Rect(cat_posx, cat_posy,CAT_WIDTH,CAT_HEIGHT)
 
 #Surface
 # Player
@@ -114,12 +113,9 @@ while running:
             player.x += 200 * dt
 
     # Open/Close inventory with 'I'
-    if inv[pygame.K_i]:
-        if pygame.KEYUP:
-         if inventory_open == False:
-            inventory_open = True
-         else:
-            inventory_open = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_i:
+                inventory_open = not inventory_open
 
     # Add random item to inventory (for testing, just add an item each frame)
     if len(inventory) < 8 and random.random() < 0.05:  # 5% chance to add item
@@ -127,7 +123,7 @@ while running:
         inventory.sort()  # Sort inventory alphabetically
 
     # Draw everything
-    draw(player, elapsed_time, cat, inventory, inventory_open)
+    draw(player, elapsed_time, cat, inventory, inventory_open,cat_surf)
 
     # Flip display
     pygame.display.flip()

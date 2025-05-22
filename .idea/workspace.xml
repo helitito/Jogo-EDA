@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Ajustado tamanho do inventário e dislay do nome dos itens">
+    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -42,13 +42,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Python.main.executor": "Debug",
+    "Python.main.executor": "Run",
     "Python.teste.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/helio/PycharmProjects/Jogo-EDA/Code/main.py"
+    "last_opened_file_path": "C:/Users/helio/PycharmProjects/Jogo-EDA/Code/main.py",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RunManager">
@@ -79,7 +80,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-348a24fa61fa-5312c7369657-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.23774.444" />
+        <option value="bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159" />
       </set>
     </attachedChunks>
   </component>
@@ -180,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743165246591</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem">
+      <option name="closed" value="true" />
+      <created>1745500105379</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745500105379</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -206,6 +215,7 @@
     <MESSAGE value="inventário movido para o canto esquerdo" />
     <MESSAGE value="Resolvido bug do inventario piscando e não fechando direito" />
     <MESSAGE value="Ajustado tamanho do inventário e dislay do nome dos itens" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajustado tamanho do inventário e dislay do nome dos itens" />
+    <MESSAGE value="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem" />
   </component>
 </project>
