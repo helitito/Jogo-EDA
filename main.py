@@ -94,6 +94,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_i:
+                inventory_open = not inventory_open
+
     #Draw the background
             
 
@@ -112,10 +116,6 @@ while running:
         if keys[pygame.K_d] and player.right < SCREEN_WIDTH:
             player.x += 200 * dt
 
-    # Open/Close inventory with 'I'
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_i:
-                inventory_open = not inventory_open
 
     # Add random item to inventory (for testing, just add an item each frame)
     if len(inventory) < 8 and random.random() < 0.05:  # 5% chance to add item
