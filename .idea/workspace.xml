@@ -4,16 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem da pasta Cats">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Corrigido bug do inventário" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -197,7 +195,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747935127478</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Corrigido bug do inventário">
+      <option name="closed" value="true" />
+      <created>1748543408109</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1748543408109</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -225,6 +231,7 @@
     <MESSAGE value="Ajustado tamanho do inventário e dislay do nome dos itens" />
     <MESSAGE value="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem" />
     <MESSAGE value="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem da pasta Cats" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem da pasta Cats" />
+    <MESSAGE value="Corrigido bug do inventário" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrigido bug do inventário" />
   </component>
 </project>
