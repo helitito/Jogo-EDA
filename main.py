@@ -13,19 +13,19 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # FONT
 FONT = pygame.font.SysFont("comicsans", 30)
-item_font = pygame.font.SysFont('comicsans',15)
+item_font = pygame.font.SysFont('comicsans', 15)
 
 # Background
 BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-# Inventario
+# Inventory Background
 inventory_background = pygame.Rect((50, SCREEN_HEIGHT-90), (490, 80))
 
-# Constantes
-PLAYER_WIDTH = 150
-PLAYER_HEIGHT = 150
+# Tamanho fixo para os sprites do personagem
+PLAYER_WIDTH = 250
+PLAYER_HEIGHT = 250
 
-# Sprites do personagem 
+# Carregar e redimensionar sprites do personagem
 sprite_direita = [
     pygame.transform.scale(pygame.image.load("Personagem/personagem-direito1.png"), (PLAYER_WIDTH, PLAYER_HEIGHT)),
     pygame.transform.scale(pygame.image.load("Personagem/personagem-direito2.png"), (PLAYER_WIDTH, PLAYER_HEIGHT))
@@ -37,7 +37,7 @@ sprite_esquerda = [
 
 sprite_index = 0
 sprite_timer = 0
-sprite_delay = 0.1  
+sprite_delay = 0.06  
 direcao = "direita"
 
 def draw(player, elapsed_time, cat, inventory, inventory_open, cat_surf, sprite_img):
@@ -46,7 +46,7 @@ def draw(player, elapsed_time, cat, inventory, inventory_open, cat_surf, sprite_
     screen.blit(time_text, (10, 10))
 
     screen.blit(sprite_img, (player.x, player.y))
-    screen.blit(cat_surf,(cat.x,cat.y))
+    screen.blit(cat_surf, (cat.x, cat.y))
 
     if inventory_open:
         pygame.draw.rect(screen, 'Black', inventory_background)
@@ -92,11 +92,11 @@ def new_cat():
 
 cat, cat_sex, cat_surf = new_cat()
 
-# Personagem
+# Player
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() - PLAYER_HEIGHT)
 player = pygame.Rect(player_pos.x, player_pos.y, PLAYER_WIDTH, PLAYER_HEIGHT)
 
-# Inventario
+# Inventory
 inventory = []
 inventory_open = False
 
@@ -130,18 +130,18 @@ while running:
             direcao = "direita"
             movendo = True
 
-    # Animação
+    # Atualiza animação
     if movendo:
         sprite_timer += dt
         if sprite_timer >= sprite_delay:
             sprite_index = (sprite_index + 1) % 2
             sprite_timer = 0
     else:
-        sprite_index = 0  
+        sprite_index = 0
 
     sprite_img = sprite_direita[sprite_index] if direcao == "direita" else sprite_esquerda[sprite_index]
 
-    # Transições restritas
+    # Transições de mapa
     if player.left < 30 and player.top < 150:
         map_state = 1
         cat, cat_sex, cat_surf = new_cat()
