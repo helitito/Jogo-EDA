@@ -1,0 +1,140 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import random\r\nimport time\r\nimport pygame\r\n\r\n# pygame setup\r\npygame.init()\r\npygame.font.init()\r\n\r\n# Screen size\r\nSCREEN_WIDTH = 1280\r\nSCREEN_HEIGHT = 720\r\nscreen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))\r\n\r\n# FONT\r\nFONT = pygame.font.SysFont(\"comicsans\", 30)\r\nitem_font = pygame.font.SysFont('comicsans',15)\r\n\r\n# Background\r\nBG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))\r\n\r\n# Inventario\r\ninventory_background = pygame.Rect((50, SCREEN_HEIGHT-90), (490, 80))\r\n\r\n# Constantes\r\nPLAYER_WIDTH = 150\r\nPLAYER_HEIGHT = 150\r\n\r\n# Sprites do personagem \r\nsprite_direita = [\r\n    pygame.transform.scale(pygame.image.load(\"Personagem/personagem-direito1.png\"), (PLAYER_WIDTH, PLAYER_HEIGHT)),\r\n    pygame.transform.scale(pygame.image.load(\"Personagem/personagem-direito2.png\"), (PLAYER_WIDTH, PLAYER_HEIGHT))\r\n]\r\nsprite_esquerda = [\r\n    pygame.transform.scale(pygame.image.load(\"Personagem/personagem-esquerda1.png\"), (PLAYER_WIDTH, PLAYER_HEIGHT)),\r\n    pygame.transform.scale(pygame.image.load(\"Personagem/personagem-esquerda2.png\"), (PLAYER_WIDTH, PLAYER_HEIGHT))\r\n]\r\n\r\nsprite_index = 0\r\nsprite_timer = 0\r\nsprite_delay = 0.1  \r\ndirecao = \"direita\"\r\n\r\ndef draw(player, elapsed_time, cat, inventory, inventory_open, cat_surf, sprite_img):\r\n    screen.blit(BG, (0, 0))\r\n    time_text = FONT.render(f\"Time: {round(elapsed_time)}s\", 1, \"white\")\r\n    screen.blit(time_text, (10, 10))\r\n\r\n    screen.blit(sprite_img, (player.x, player.y))\r\n    screen.blit(cat_surf,(cat.x,cat.y))\r\n\r\n    if inventory_open:\r\n        pygame.draw.rect(screen, 'Black', inventory_background)\r\n        for i, item in enumerate(inventory):\r\n            pygame.draw.rect(screen, 'green', (60 + i * 60, SCREEN_HEIGHT - 80, 50, 40))\r\n            item_text = item_font.render(item, 1, \"white\")\r\n            screen.blit(item_text, (60 + i * 60, SCREEN_HEIGHT - 40))\r\n\r\n    pygame.display.update()\r\n\r\n# Clock\r\nclock = pygame.time.Clock()\r\nstart_time = time.time()\r\nelapsed_time = 0\r\n\r\n# Game control\r\nrunning = True\r\ndt = 0\r\n\r\npygame.display.set_caption('Are we out of the woods yet?')\r\nicon_surf = pygame.transform.scale(pygame.image.load('Icon.jpg'), (50, 50))\r\npygame.display.set_icon(icon_surf)\r\n\r\n# Cat setup\r\nCAT_PICS = ['Cats/White.png','Cats/Beige.png','Cats/Black.png','Cats/Orange.png','Cats/Grey.png']\r\nCAT_HEIGHT = 40\r\nCAT_WIDTH = 40\r\ncat_surf = pygame.transform.scale(pygame.image.load(random.choice(CAT_PICS)), (CAT_WIDTH, CAT_HEIGHT))\r\n\r\nCAT_NAMES_M = ['fred', 'tom', 'mingau', 'james', 'nico']\r\nCAT_NAMES_F = ['nina', 'ginger', 'pom pom', 'julie', 'marie', 'venus']\r\n\r\ndef chooseCatName(cat_sex):\r\n    return random.choice(CAT_NAMES_F if cat_sex == 0 else CAT_NAMES_M)\r\n\r\ndef new_cat():\r\n    posx = float(random.randint(100, SCREEN_WIDTH - 100))\r\n    posy = float(random.randint(100, SCREEN_HEIGHT - 100))\r\n    sex = random.randint(0, 1)\r\n    img = pygame.transform.scale(pygame.image.load(random.choice(CAT_PICS)), (CAT_WIDTH, CAT_HEIGHT))\r\n    rect = pygame.Rect(posx, posy, CAT_WIDTH, CAT_HEIGHT)\r\n    return rect, sex, img\r\n\r\ncat, cat_sex, cat_surf = new_cat()\r\n\r\n# Personagem\r\nplayer_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() - PLAYER_HEIGHT)\r\nplayer = pygame.Rect(player_pos.x, player_pos.y, PLAYER_WIDTH, PLAYER_HEIGHT)\r\n\r\n# Inventario\r\ninventory = []\r\ninventory_open = False\r\n\r\n# Mapa\r\nmap_state = 0\r\n\r\n# Loop principal\r\nwhile running:\r\n    for event in pygame.event.get():\r\n        if event.type == pygame.QUIT:\r\n            running = False\r\n        if event.type == pygame.KEYDOWN and event.key == pygame.K_i:\r\n            inventory_open = not inventory_open\r\n\r\n    keys = pygame.key.get_pressed()\r\n    movendo = False\r\n\r\n    if not inventory_open:\r\n        if keys[pygame.K_w] and player.top > 0:\r\n            player.y -= 200 * dt\r\n            movendo = True\r\n        if keys[pygame.K_s] and player.bottom < SCREEN_HEIGHT:\r\n            player.y += 200 * dt\r\n            movendo = True\r\n        if keys[pygame.K_a] and player.left > 0:\r\n            player.x -= 200 * dt\r\n            direcao = \"esquerda\"\r\n            movendo = True\r\n        if keys[pygame.K_d] and player.right < SCREEN_WIDTH:\r\n            player.x += 200 * dt\r\n            direcao = \"direita\"\r\n            movendo = True\r\n\r\n    # Animação\r\n    if movendo:\r\n        sprite_timer += dt\r\n        if sprite_timer >= sprite_delay:\r\n            sprite_index = (sprite_index + 1) % 2\r\n            sprite_timer = 0\r\n    else:\r\n        sprite_index = 0  \r\n\r\n    sprite_img = sprite_direita[sprite_index] if direcao == \"direita\" else sprite_esquerda[sprite_index]\r\n\r\n    # Transições restritas\r\n    if player.left < 30 and player.top < 150:\r\n        map_state = 1\r\n        cat, cat_sex, cat_surf = new_cat()\r\n        player.x = SCREEN_WIDTH - player.width - 40\r\n\r\n    elif player.right > SCREEN_WIDTH - 30 and player.top < 150:\r\n        map_state = 2\r\n        cat, cat_sex, cat_surf = new_cat()\r\n        player.x = 40\r\n\r\n    elif player.bottom > SCREEN_HEIGHT - 30 and SCREEN_WIDTH // 2 - 100 < player.centerx < SCREEN_WIDTH // 2 + 100:\r\n        map_state = 3\r\n        cat, cat_sex, cat_surf = new_cat()\r\n        player.y = 40\r\n\r\n    if len(inventory) < 8 and random.random() < 0.05:\r\n        inventory.append(f\"Item{len(inventory) + 1}\")\r\n        inventory.sort()\r\n\r\n    draw(player, elapsed_time, cat, inventory, inventory_open, cat_surf, sprite_img)\r\n\r\n    dt = clock.tick(60) / 1000\r\n    elapsed_time = time.time() - start_time\r\n\r\npygame.quit()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision d8d4e9772a2b966628d88f8a29764e0886125f2b)
++++ b/main.py	(date 1748982874891)
+@@ -32,7 +32,7 @@
+ ]
+ sprite_esquerda = [
+     pygame.transform.scale(pygame.image.load("Personagem/personagem-esquerda1.png"), (PLAYER_WIDTH, PLAYER_HEIGHT)),
+-    pygame.transform.scale(pygame.image.load("Personagem/personagem-esquerda2.png"), (PLAYER_WIDTH, PLAYER_HEIGHT))
++    pygame.transform.scale(pygame.image.load("Personagem/personagem-esquerda2.png"), (PLAYER_WIDTH, PLAYER_HEIGHT)),
+ ]
+ 
+ sprite_index = 0
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"Black\">\r\n    <option name=\"sdkName\" value=\"Python 3.12\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.13\" project-jdk-type=\"Python SDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision d8d4e9772a2b966628d88f8a29764e0886125f2b)
++++ b/.idea/misc.xml	(date 1748982815093)
+@@ -3,5 +3,5 @@
+   <component name="Black">
+     <option name="sdkName" value="Python 3.12" />
+   </component>
+-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12" project-jdk-type="Python SDK" />
+ </project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"8c23565a-9b0c-45ec-9e2b-a86eb209c02e\" name=\"Changes\" comment=\"Corrigido bug do inventário\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_AUTO_UPDATE\" value=\"true\" />\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;helitito&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/helitito/Jogo-EDA.git&quot;,\r\n    &quot;accountId&quot;: &quot;938ef3eb-bf9e-4464-9542-fafda862d552&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2uBG5skKnBrAg0TWPJUNd2ACD3L\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <OptionsSetting value=\"false\" id=\"Update\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;Python.main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Python.teste.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/helio/PycharmProjects/Jogo-EDA/Code/main.py&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"SDK_NAME\" value=\"Python 3.13\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <module name=\"\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"8c23565a-9b0c-45ec-9e2b-a86eb209c02e\" name=\"Changes\" comment=\"\" />\r\n      <created>1741714374583</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1741714374583</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Adicionado objeto Gato com função para desenhar em um local aleatorio da tela\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742526763828</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742526763828</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Limites laterais adicionados para o objeto Gato não aparecer fora da tela\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742526994888</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742526994888</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Adicionada uma função para escolher os nomes dos gatos aleatoriamente\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742527946949</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742527946949</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Adicionado icone ao jogo, funções para o objeto Gato e tempo decorrido na Tela\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742593357240</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742593357240</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Removida a função Drawcat, agora o objeto é desenhado junto ao jogador\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742593590121</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742593590121</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Corrigidos erros de escrita\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742764243058</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742764243058</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Adicionado a fonte dos textos dos itens e modificado como o inventário abre e fecha\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743024558581</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743024558581</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Diminuida a velocidade do jogador\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743096297112</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743096297112</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"inventário movido para o canto esquerdo\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743096525516</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743096525516</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Resolvido bug do inventario piscando e não fechando direito\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743099629990</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743099629990</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Ajustado tamanho do inventário e dislay do nome dos itens\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1743165246591</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1743165246591</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1745500105379</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1745500105379</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem da pasta Cats\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1747935127478</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1747935127478</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Corrigido bug do inventário\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1748543408109</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1748543408109</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"15\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Adicionado objeto Gato com função para desenhar em um local aleatorio da tela\" />\r\n    <MESSAGE value=\"Limites laterais adicionados para o objeto Gato não aparecer fora da tela\" />\r\n    <MESSAGE value=\"Adicionada uma função para escolher os nomes dos gatos aleatoriamente\" />\r\n    <MESSAGE value=\"Adicionado icone ao jogo, funções para o objeto Gato e tempo decorrido na Tela\" />\r\n    <MESSAGE value=\"Removida a função Drawcat, agora o objeto é desenhado junto ao jogador\" />\r\n    <MESSAGE value=\"Corrigidos erros de escrita\" />\r\n    <MESSAGE value=\"Adicionado a fonte dos textos dos itens e modificado como o inventário abre e fecha\" />\r\n    <MESSAGE value=\"Diminuida a velocidade do jogador\" />\r\n    <MESSAGE value=\"inventário movido para o canto esquerdo\" />\r\n    <MESSAGE value=\"Resolvido bug do inventario piscando e não fechando direito\" />\r\n    <MESSAGE value=\"Ajustado tamanho do inventário e dislay do nome dos itens\" />\r\n    <MESSAGE value=\"Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem\" />\r\n    <MESSAGE value=\"Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem da pasta Cats\" />\r\n    <MESSAGE value=\"Corrigido bug do inventário\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Corrigido bug do inventário\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision d8d4e9772a2b966628d88f8a29764e0886125f2b)
++++ b/.idea/workspace.xml	(date 1749065631123)
+@@ -4,14 +4,17 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Corrigido bug do inventário" />
++    <list default="true" id="8c23565a-9b0c-45ec-9e2b-a86eb209c02e" name="Changes" comment="Ajustado tamanho do inventário e dislay do nome dos itens">
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
+   <component name="Git.Settings">
+-    <option name="PUSH_AUTO_UPDATE" value="true" />
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="GitHubPullRequestSearchHistory">{
+@@ -23,7 +26,7 @@
+   <component name="GithubPullRequestsUISettings">{
+   &quot;selectedUrlAndAccountId&quot;: {
+     &quot;url&quot;: &quot;https://github.com/helitito/Jogo-EDA.git&quot;,
+-    &quot;accountId&quot;: &quot;938ef3eb-bf9e-4464-9542-fafda862d552&quot;
++    &quot;accountId&quot;: &quot;26ece12c-0df9-4eb5-990a-99f8c0c35851&quot;
+   }
+ }</component>
+   <component name="ProjectColorInfo">{
+@@ -46,8 +49,7 @@
+     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/helio/PycharmProjects/Jogo-EDA/Code/main.py&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/helio/PycharmProjects/Jogo-EDA/Code/main.py&quot;
+   }
+ }</component>
+   <component name="RunManager">
+@@ -59,7 +61,7 @@
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+       <option name="SDK_HOME" value="" />
+-      <option name="SDK_NAME" value="Python 3.13" />
++      <option name="SDK_NAME" value="Python 3.12" />
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+       <option name="IS_MODULE_SDK" value="false" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+@@ -179,31 +181,7 @@
+       <option name="project" value="LOCAL" />
+       <updated>1743165246591</updated>
+     </task>
+-    <task id="LOCAL-00012" summary="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem">
+-      <option name="closed" value="true" />
+-      <created>1745500105379</created>
+-      <option name="number" value="00012" />
+-      <option name="presentableId" value="LOCAL-00012" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1745500105379</updated>
+-    </task>
+-    <task id="LOCAL-00013" summary="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem da pasta Cats">
+-      <option name="closed" value="true" />
+-      <created>1747935127478</created>
+-      <option name="number" value="00013" />
+-      <option name="presentableId" value="LOCAL-00013" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1747935127478</updated>
+-    </task>
+-    <task id="LOCAL-00014" summary="Corrigido bug do inventário">
+-      <option name="closed" value="true" />
+-      <created>1748543408109</created>
+-      <option name="number" value="00014" />
+-      <option name="presentableId" value="LOCAL-00014" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1748543408109</updated>
+-    </task>
+-    <option name="localTasksCounter" value="15" />
++    <option name="localTasksCounter" value="12" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -229,9 +207,6 @@
+     <MESSAGE value="inventário movido para o canto esquerdo" />
+     <MESSAGE value="Resolvido bug do inventario piscando e não fechando direito" />
+     <MESSAGE value="Ajustado tamanho do inventário e dislay do nome dos itens" />
+-    <MESSAGE value="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem" />
+-    <MESSAGE value="Adicionados as imagens dos gatos e criado um metodo para selecionar aleatóriamente uma imagem da pasta Cats" />
+-    <MESSAGE value="Corrigido bug do inventário" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Corrigido bug do inventário" />
++    <option name="LAST_COMMIT_MESSAGE" value="Ajustado tamanho do inventário e dislay do nome dos itens" />
+   </component>
+ </project>
+\ No newline at end of file
