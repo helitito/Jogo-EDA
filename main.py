@@ -16,7 +16,7 @@ FONT = pygame.font.SysFont("comicsans", 30)
 item_font = pygame.font.SysFont('comicsans', 15)
 
 # Background
-BG = pygame.transform.scale(pygame.image.load('Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
+BG = pygame.transform.scale(pygame.image.load('Maps/Background.jpeg'), (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Inventory Background
 inventory_background = pygame.Rect((50, SCREEN_HEIGHT-90), (490, 80))
@@ -32,7 +32,7 @@ sprite_direita = [
 ]
 sprite_esquerda = [
     pygame.transform.scale(pygame.image.load("Personagem/personagem-esquerda1.png"), (PLAYER_WIDTH, PLAYER_HEIGHT)),
-    pygame.transform.scale(pygame.image.load("Personagem/personagem-esquerda2.png"), (PLAYER_WIDTH, PLAYER_HEIGHT))
+    pygame.transform.scale(pygame.image.load("Personagem/personagem-esquerda2.png"), (PLAYER_WIDTH, PLAYER_HEIGHT)),
 ]
 
 sprite_index = 0
@@ -102,6 +102,17 @@ inventory_open = False
 
 # Mapa
 map_state = 0
+#Mudando o Mapa
+if map_state == 1 :
+    BG = pygame.transform.scale(pygame.image.load('Mapa_1'),(SCREEN_WIDTH,SCREEN_HEIGHT))
+elif map_state == 2:
+    BG = pygame.transform.scale(pygame.image.load('Mapa_2'),(SCREEN_WIDTH,SCREEN_HEIGHT))
+elif map_state == 3:
+    BG = pygame.transform.scale(pygame.image.load('Mapa_3'),(SCREEN_WIDTH,SCREEN_HEIGHT))
+elif map_state == 4:
+    BG = pygame.transform.scale(pygame.image.load('Mapa_4'),(SCREEN_WIDTH,SCREEN_HEIGHT))
+
+
 
 # Loop principal
 while running:
